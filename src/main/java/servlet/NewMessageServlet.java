@@ -12,6 +12,10 @@ import java.util.Calendar;
 
 public class NewMessageServlet extends ChatServlet {
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws SecurityException, IOException {
+        response.sendError(404);
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String message = request.getParameter("message");
@@ -22,6 +26,6 @@ public class NewMessageServlet extends ChatServlet {
                         Calendar.getInstance().getTimeInMillis()));
             }
         }
-        response.sendRedirect("/chat/view.html");
+        response.sendRedirect("/chat/messages.html");
     }
 }

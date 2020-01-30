@@ -4,43 +4,57 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <!--LOGIN-->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>servlet.LoginServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/chat</url-pattern>
     </servlet-mapping>
 
+    <!--LOGOUT-->
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>servlet.LogoutServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/chat/logout</url-pattern>
     </servlet-mapping>
 
+    <!--MESSAGE LIST-->
     <servlet>
         <servlet-name>MessageListServlet</servlet-name>
         <servlet-class>servlet.MessageListServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>MessageListServlet</servlet-name>
         <url-pattern>/chat/message_list</url-pattern>
     </servlet-mapping>
 
+    <!--NEW MESSAGE-->
     <servlet>
         <servlet-name>NewMessageServlet</servlet-name>
         <servlet-class>servlet.NewMessageServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>NewMessageServlet</servlet-name>
         <url-pattern>/chat/send_message</url-pattern>
     </servlet-mapping>
+
+    <!--404 ERROR-->
+    <servlet>
+        <servlet-name>404</servlet-name>
+        <jsp-file>/404.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>404</servlet-name>
+        <url-pattern>/404</url-pattern>
+    </servlet-mapping>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404</location>
+    </error-page>
 </web-app>

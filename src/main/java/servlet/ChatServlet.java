@@ -15,8 +15,8 @@ public class ChatServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        activeUsers = (HashMap<String, ChatUser>)getServletContext().getAttribute("activeUsers");
-        messages = (ArrayList<ChatMessage>)getServletContext().getAttribute("messages");
+        activeUsers = (HashMap<String, ChatUser>) getServletContext().getAttribute("activeUsers");
+        messages = (ArrayList<ChatMessage>) getServletContext().getAttribute("messages");
         if (activeUsers == null) {
             activeUsers = new HashMap<String, ChatUser>();
             getServletContext().setAttribute("activeUsers", activeUsers);

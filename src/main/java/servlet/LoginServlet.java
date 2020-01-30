@@ -27,7 +27,7 @@ public class LoginServlet extends ChatServlet {
         String name = (String)request.getSession().getAttribute("name");
         String errorMessage = (String)request.getSession().getAttribute("error");
         String previousSessionId = null;
-        if(name == null) {
+        if(name == null && request.getCookies() != null) {
             for(Cookie aCookie: request.getCookies()) {
                 if(aCookie.getName().equals("sessionId")) {
                     previousSessionId = aCookie.getValue();
@@ -53,7 +53,7 @@ public class LoginServlet extends ChatServlet {
             pw.println("<p><font color='red'>" + errorMessage + "</font></p>");
         }
         pw.println("<form action='/chat' method='post'>" +
-                    "Введите имя: <input type='text' name='name' value=''><input type='submit' value='Войти в чат'>");
+                    "Введите имя: <input type='text' autofocus name='name' value=''><input type='submit' value='Войти в чат'>");
         pw.println("</form></body></html>");
         request.getSession().setAttribute("error", null);
     }
