@@ -2,7 +2,6 @@ package servlet;
 
 import entity.ChatMessage;
 import entity.ChatUser;
-import servlet.ChatServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

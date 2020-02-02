@@ -2,12 +2,12 @@ package servlet;
 
 import entity.ChatUser;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Calendar;
 
 public class LoginServlet extends ChatServlet {
@@ -25,7 +25,6 @@ public class LoginServlet extends ChatServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = (String)request.getSession().getAttribute("name");
-        String errorMessage = (String)request.getSession().getAttribute("error");
         String previousSessionId = null;
         if(name == null && request.getCookies() != null) {
             for(Cookie aCookie: request.getCookies()) {
@@ -43,19 +42,17 @@ public class LoginServlet extends ChatServlet {
                 }
             }
         }
+        boolean needsForward = true;
         if(name != null && !"".equals(name)) {
-            errorMessage = processLogonAttempt(name, request, response);
+            String errorMessage = processLogonAttempt(name, request, response);
+            request.getSession().setAttribute("error", errorMessage);
+            if(errorMessage == null)
+                needsForward = false;
         }
-        response.setCharacterEncoding("utf8");
-        PrintWriter pw = response.getWriter();
-        pw.println("<html><head><title>Мега-чат!</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head>");
-        if(errorMessage != null) {
-            pw.println("<p><font color='red'>" + errorMessage + "</font></p>");
+        if(needsForward) {
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("startPage.jsp");
+            requestDispatcher.forward(request, response);
         }
-        pw.println("<form action='/chat' method='post'>" +
-                    "Введите имя: <input type='text' autofocus name='name' value=''><input type='submit' value='Войти в чат'>");
-        pw.println("</form></body></html>");
-        request.getSession().setAttribute("error", null);
     }
 
     @Override
@@ -90,7 +87,7 @@ public class LoginServlet extends ChatServlet {
             request.getSession().setAttribute("name", name);
             aUser.setLastInteractionTime(Calendar.getInstance().getTimeInMillis());
             Cookie sessionIdCookie = new Cookie("sessionId", sessionId);
-            sessionIdCookie.setMaxAge(60*60*24);
+            sessionIdCookie.setMaxAge(60 * 60 * 24);
             response.addCookie(sessionIdCookie);
             response.sendRedirect(response.encodeRedirectURL("/chat/view.html"));
             return null;
