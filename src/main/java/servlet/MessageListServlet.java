@@ -1,6 +1,7 @@
 package servlet;
 
 import entity.ChatMessage;
+import entity.ChatUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +19,23 @@ public class MessageListServlet extends ChatServlet {
         pw.println("<body>");
         for (int i = messages.size() - 1; i >= 0; --i) {
             ChatMessage aMessage = messages.get(i);
-            pw.println("<div><strong>" + aMessage.getAuthor().getName()
-                    + "</strong>: " + aMessage.getMessage() + "</div>");
+            String name = (String)request.getSession().getAttribute("name");
+            if(name.equals(aMessage.getRecipient())){
+                pw.print("<div><strong style=\"color:red\">");
+            } else
+            {
+                pw.print("<div><strong>");
+            }
+            pw.println(aMessage.getAuthor().getName() + " -> " + aMessage.getRecipient() +
+                    "</strong>: " + aMessage.getMessage() + "</div>");
         }
         pw.println("</body></html>");
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String m = request.getParameter("auto");
+        ChatUser user = activeUsers.get((String) request.getSession().getAttribute("name"));
+        user.setAnswering(m.equals("true"));
     }
 }
 

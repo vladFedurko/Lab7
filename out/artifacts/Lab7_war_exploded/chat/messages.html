@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 5 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
 <head>
@@ -16,13 +16,16 @@
 </script>
 <body onload="onLoad()">
     <form class="form-inline" action="/chat/send_message" method="post">
-        <div class="input-group mb-3" style="width: 50%; margin-left: 2%">
-            <input type="text" class="form-control" autofocus id="message" name="message" placeholder="Введите сообщение" style="width: 50%">
+        <div class="input-group mb-3" style="width: 70%; margin-left: 2%">
+            <input type="text" class="form-control" autofocus id="message" name="message" placeholder="Введите сообщение" style="width: 70%">
+            <input type="text" class="form-control" id="recipient" name="recipient" placeholder="Кому" style="width: 30%">
             <div class="input-group-append">
                 <input type="submit" class="btn btn-primary mr-sm-2" value="Отправить">
             </div>
         </div>
-        <a href="/chat/logout" class="btn btn-outline-success" target="_top" style="margin-bottom: auto">Выйти из чата</a>
     </form>
+    <div style="margin-left: 2%">
+    <a href="/chat/logout" class="btn btn-outline-success" target="_top" style="margin-bottom: auto">Выйти из чата</a>
+    </div>
 </body>
 </html>
