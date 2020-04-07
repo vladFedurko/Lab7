@@ -44,7 +44,7 @@ public class LoginServlet extends ChatServlet {
         }
         boolean needsForward = true;
         if(name != null && !"".equals(name)) {
-            String errorMessage = processLogonAttempt(name, request, response);
+            String errorMessage = processLogonAttempt(name, request, response, false);
             request.getSession().setAttribute("error", errorMessage);
             if(errorMessage == null)
                 needsForward = false;
@@ -59,12 +59,13 @@ public class LoginServlet extends ChatServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String name = request.getParameter("name");
+        String answering = request.getParameter("answering");
         String errorMessage;
         if(name == null || "".equals(name)) {
             errorMessage = "Имя пользователя не может быть пустым!";
         }
         else {
-            errorMessage = processLogonAttempt(name, request, response);
+            errorMessage = processLogonAttempt(name, request, response, answering != null);
         }
         if(errorMessage != null) {
             request.getSession().setAttribute("name", null);
@@ -73,11 +74,11 @@ public class LoginServlet extends ChatServlet {
         }
     }
 
-    String processLogonAttempt(String name, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String processLogonAttempt(String name, HttpServletRequest request, HttpServletResponse response, boolean answering) throws IOException {
         String sessionId = request.getSession().getId();
         ChatUser aUser = activeUsers.get(name);
         if(aUser == null) {
-            aUser = new ChatUser(name, Calendar.getInstance().getTimeInMillis(), sessionId);
+            aUser = new ChatUser(name, Calendar.getInstance().getTimeInMillis(), sessionId, answering);
             synchronized (activeUsers) {
                 activeUsers.put(aUser.getName(), aUser);
             }

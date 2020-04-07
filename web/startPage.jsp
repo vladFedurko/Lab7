@@ -21,6 +21,7 @@
                 <label for='name' >Введите имя:</label>
                 <input type='text' class="form-control" autofocus name='name' id='name' value='' required>
                 <div class="invalid-feedback">Пожалуйста, заполните это поле.</div>
+                <input type='checkbox' name="answering" id="answering" value=''>Автоответчик
             </div>
             <input type='submit' align="center" class='btn btn-primary' value='Войти в чат'>
         </form>
